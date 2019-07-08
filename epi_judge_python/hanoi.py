@@ -9,7 +9,18 @@ NUM_PEGS = 3
 
 def compute_tower_hanoi(num_rings):
     # TODO - you fill in here.
-    return []
+    def move_rings(num_rings, from_rod, to_rod, aux_rod):
+        if num_rings == 0:
+            return
+
+        move_rings(num_rings - 1, from_rod, aux_rod, to_rod)
+        moves.append((from_rod, to_rod))
+        move_rings(num_rings - 1, aux_rod, to_rod, from_rod)
+
+    moves = []
+    move_rings(num_rings, 0, 1, 2)
+
+    return moves
 
 
 @enable_executor_hook
