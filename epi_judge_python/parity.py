@@ -3,7 +3,11 @@ from test_framework import generic_test
 
 def parity(x):
     # TODO - you fill in here.
-    return 0
+    parity = 0
+    while x:
+        parity ^= x & 1
+        x >>= 1
+    return parity
 
 
 if __name__ == '__main__':
