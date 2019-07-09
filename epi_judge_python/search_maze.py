@@ -6,14 +6,43 @@ from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
-WHITE, BLACK = range(2)
+WHITE, BLACK, VISITED = range(3)
 
 Coordinate = collections.namedtuple('Coordinate', ('x', 'y'))
 
 
 def search_maze(maze, s, e):
     # TODO - you fill in here.
-    return []
+    def is_valid_location(x, y):
+        return 0 <= x < len(maze) and 0 <= y < len(maze[0]) and maze[x][y] == WHITE
+
+    def explore(x, y):
+        if not is_valid_location(x, y):
+            return False
+        maze[x][y] = VISITED
+
+        if x == e.x and y == e.y:
+            return True
+
+        for dx, dy in [(-1, 0), (+1, 0), (0, -1), (0, +1)]:
+            new_x, new_y = x + dx, y + dy
+
+            if explore(new_x, new_y):
+                path.append(Coordinate(new_x, new_y))
+                return True
+
+        return False
+
+    path = []
+    explore(s.x, s.y)
+
+    path.append(s)
+    path = list(reversed(path))
+
+    if path[-1] != e:
+        return []
+
+    return path
 
 
 def path_element_is_feasible(maze, prev, cur):
