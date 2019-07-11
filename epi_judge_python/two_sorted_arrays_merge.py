@@ -3,7 +3,27 @@ from test_framework import generic_test
 
 def merge_two_sorted_arrays(A, m, B, n):
     # TODO - you fill in here.
-    return
+    i = m - 1
+    j = n - 1
+    k = m + n - 1
+
+    while i >= 0 and j >= 0:
+        if A[i] > B[j]:
+            A[k] = A[i]
+            i -= 1
+            k -= 1
+        else:
+            A[k] = B[j]
+            j -= 1
+            k -= 1
+
+    if j >= 0:
+        while j >= 0:
+            A[k] = B[j]
+            j -= 1
+            k -= 1
+
+    return A
 
 
 def merge_two_sorted_arrays_wrapper(A, m, B, n):
