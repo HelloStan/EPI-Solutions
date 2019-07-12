@@ -11,9 +11,9 @@ def n_queens(n):
     diag_a_spaces = set()
     diag_b_spaces = set()
 
-    def solve(col, row_placements):
+    def solve(col=0):
         if col == n:
-            solution.append(row_placements)
+            solution.append(copy(row_placements))
             return
 
         for row in range(n):
@@ -29,13 +29,13 @@ def n_queens(n):
             diag_b_spaces.add((n - row - col - 1))
 
             row_placements[col] = row
-            solve(col + 1, copy(row_placements))
+            solve(col + 1)
 
             row_spaces.remove(row)
             diag_a_spaces.remove((col - row))
             diag_b_spaces.remove((n - row - col - 1))
 
-    solve(0, row_placements)
+    solve()
 
     return solution
 
