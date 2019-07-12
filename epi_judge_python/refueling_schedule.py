@@ -11,7 +11,19 @@ MPG = 20
 # distance city i to the next city.
 def find_ample_city(gallons, distances):
     # TODO - you fill in here.
-    return 0
+    min_city = len(gallons) - 1
+    min_gas_level = gallons[-1]
+
+    current_gas_level = gallons[-1] - distances[-1] / MPG
+
+    for i, (refuel_gas, distance) in enumerate(zip(gallons, distances)):
+        if current_gas_level < min_gas_level:
+            min_gas_level = current_gas_level
+            min_city = i
+
+        current_gas_level += refuel_gas - distance / MPG
+
+    return min_city
 
 
 @enable_executor_hook
