@@ -3,18 +3,16 @@ from test_framework import generic_test
 
 def number_of_ways(n, m):
     # TODO - you fill in here.
-    grid = [[0]*m for _ in range(n)]
-
-    for i in range(n):
-        grid[i][0] = 1
-    for j in range(m):
-        grid[0][j] = 1
+    row = [1] * m
 
     for i in range(1, n):
+        new_row = row.copy()
         for j in range(1, m):
-            grid[i][j] = grid[i-1][j] + grid[i][j-1]
+            new_row[j] = new_row[j-1] + row[j]
 
-    return grid[-1][-1]
+        row = new_row
+
+    return row[-1]
 
 
 if __name__ == '__main__':
