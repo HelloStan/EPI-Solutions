@@ -3,6 +3,9 @@ from test_framework import generic_test
 
 def number_of_ways(n, m):
     # TODO - you fill in here.
+    if m > n:
+        n, m = m, n
+
     row = [1] * m
 
     for i in range(1, n):
