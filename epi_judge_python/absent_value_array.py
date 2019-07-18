@@ -1,10 +1,29 @@
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
+from itertools import tee
 
 
 def find_missing_element(stream):
     # TODO - you fill in here.
-    return 0
+    prefix = 0
+
+    for shift in [24, 16, 8, 0]:
+        count = {i: 0 for i in range(256)}
+        prefix_mask = 0xFFFFFF00 << shift
+        stream, stream_copy = tee(stream)
+
+        for e in stream_copy:
+            if e & prefix_mask == prefix:
+                byte = (e >> shift) & 0xFF
+                count[byte] += 1
+
+        max_count = 2 ** shift
+        for key in sorted(count.keys()):
+            if count[key] < max_count:
+                prefix += key << shift
+                break
+
+    return prefix
 
 
 def find_missing_element_wrapper(data):
