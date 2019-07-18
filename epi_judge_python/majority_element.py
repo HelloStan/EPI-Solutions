@@ -3,7 +3,17 @@ from test_framework import generic_test
 
 def majority_search(stream):
     # TODO - you fill in here.
-    return ''
+    majority = next(stream)
+    count = 1
+
+    for element in stream:
+        if count == 0:
+            majority = element
+            count = 1
+        else:
+            count += +1 if majority == element else -1
+
+    return majority
 
 
 def majority_search_wrapper(stream):
