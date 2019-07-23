@@ -4,13 +4,35 @@ import functools
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
+from collections import defaultdict
 
 Subarray = collections.namedtuple('Subarray', ('start', 'end'))
 
 
 def find_smallest_subarray_covering_set(paragraph, keywords):
     # TODO - you fill in here.
-    return Subarray(0, 0)
+    counter = defaultdict(int)
+    to_cover = len(keywords)
+    left = 0
+    result = None
+    for right, word in enumerate(paragraph):
+        if word in keywords:
+            if counter[word] == 0:
+                to_cover -= 1
+            counter[word] += 1
+
+        while to_cover == 0:
+            if result is None or (right - left < result[1] - result[0]):
+                result = Subarray(left, right)
+
+            word_left = paragraph[left]
+            if word_left in keywords:
+                counter[word_left] -= 1
+                if counter[word_left] == 0:
+                    to_cover += 1
+            left += 1
+
+    return result
 
 
 @enable_executor_hook
