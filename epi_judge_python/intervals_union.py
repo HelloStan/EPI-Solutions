@@ -11,7 +11,27 @@ Interval = collections.namedtuple('Interval', ('left', 'right'))
 
 def union_of_intervals(intervals):
     # TODO - you fill in here.
-    return []
+    def is_intersect(a_left, a_right, b_left, b_right):
+        if (a_left.val < b_right.val) and (b_left.val < a_right.val):
+            return True
+        if a_left.val == b_right.val and (a_left.is_closed or b_right.is_closed):
+            return True
+        if b_left.val == a_right.val and (b_left.is_closed or a_right.is_closed):
+            return True
+        return False
+
+    intervals.sort(key=lambda x: (x.left.val, 0 if x.left.is_closed else 1))
+
+    result = [intervals[0]]
+    for left, right in intervals:
+        result_left, result_right = result[-1]
+        if not is_intersect(left, right, result_left, result_right):
+            result.append(Interval(left, right))
+        else:
+            if right.val > result_right.val or (right.val == result_right.val and right.is_closed):
+                result[-1] = Interval(result_left, right)
+
+    return result
 
 
 @enable_executor_hook
