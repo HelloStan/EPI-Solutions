@@ -14,6 +14,20 @@ class BinaryTreeNode:
 
 def construct_right_sibling(tree):
     # TODO - you fill in here.
+    def polulate_level(node):
+        while node:
+            if node.left:
+                node.left.next = node.right
+
+            if node.right:
+                node.right.next = node.next.left if node.next else None
+
+            node = node.next
+
+    while tree:
+        polulate_level(tree)
+        tree = tree.left
+
     return
 
 
