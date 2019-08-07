@@ -4,9 +4,22 @@ from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
 
 
+from binary_tree_node import BinaryTreeNode
+
+
 def reconstruct_preorder(preorder):
     # TODO - you fill in here.
-    return None
+    def build_tree(iterator):
+        key = next(iterator)
+        if key is None:
+            return None
+
+        left = build_tree(iterator)
+        right = build_tree(iterator)
+
+        return BinaryTreeNode(key, left, right)
+
+    return build_tree(iter(preorder))
 
 
 @enable_executor_hook
