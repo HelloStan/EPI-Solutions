@@ -7,7 +7,11 @@ from test_framework.test_utils import enable_executor_hook
 
 def gray_code(num_bits):
     # TODO - you fill in here.
-    return []
+    result = [0]
+    for i in range(num_bits):
+        result += [x + 2**i for x in reversed(result)]
+
+    return result
 
 
 @enable_executor_hook
