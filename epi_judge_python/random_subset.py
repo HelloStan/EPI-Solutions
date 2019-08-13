@@ -5,11 +5,25 @@ from test_framework.random_sequence_checker import (
     binomial_coefficient, check_sequence_is_uniformly_random,
     compute_combination_idx, run_func_with_retries)
 from test_framework.test_utils import enable_executor_hook
+import random
 
 
 def random_subset(n, k):
     # TODO - you fill in here.
-    return []
+    mapped_to = {}
+
+    for i in range(k):
+        random_i = random.randrange(i, n)
+
+        random_i_mapped = mapped_to.get(random_i, random_i)
+        i_mapped = mapped_to.get(i, i)
+
+        mapped_to[i] = random_i_mapped
+        mapped_to[random_i] = i_mapped
+
+    subset = [mapped_to[i] for i in range(k)]
+
+    return subset
 
 
 @enable_executor_hook
