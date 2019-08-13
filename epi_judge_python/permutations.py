@@ -6,6 +6,7 @@ def permutations(A):
     def gen_permutations(k):
         if k == 0:
             permutations.append(A.copy())
+            return
 
         for i in range(0, k + 1):
             A[i], A[k] = A[k], A[i]
