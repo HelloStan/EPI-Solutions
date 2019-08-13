@@ -10,9 +10,24 @@ class GraphVertex:
         self.edges = []
 
 
-def clone_graph(graph):
+def clone_graph(vertex):
     # TODO - you fill in here.
-    return GraphVertex(0)
+    def explore_copy(vertex):
+        if vertex in explored:
+            return
+
+        copy_vertex = GraphVertex(vertex.label)
+        explored[vertex] = copy_vertex
+
+        for neighbor in vertex.edges:
+            explore_copy(neighbor)
+            copy_neighbor = explored[neighbor]
+            copy_vertex.edges.append(copy_neighbor)
+
+    explored = {}
+    explore_copy(vertex)
+
+    return explored[vertex]
 
 
 def copy_labels(edges):
