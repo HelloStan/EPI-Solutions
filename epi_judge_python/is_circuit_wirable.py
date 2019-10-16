@@ -1,4 +1,5 @@
 import functools
+from collections import deque
 
 from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
@@ -12,7 +13,26 @@ class GraphVertex:
 
 def is_any_placement_feasible(graph):
     # TODO - you fill in here.
-    return True
+
+    def bfs(v):
+        queue = deque([v])
+
+        while queue:
+            v = queue.popleft()
+
+            side = v.d if v.d != -1 else True
+            v.d = side
+
+            for neighbor in v.edges:
+                if neighbor.d == -1:
+                    neighbor.d = not side
+                    queue.append(neighbor)
+                elif neighbor.d == side:
+                    return False
+
+        return True
+
+    return all(bfs(v) for v in graph if v.d == -1)
 
 
 @enable_executor_hook
